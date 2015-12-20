@@ -4,14 +4,13 @@
       "boot_command": [
         "<up>", "<tab>", " ", "text ks=http://{{.HTTPIP}}:{{.HTTPPort}}/ks.cfg", "<enter>"
       ],
-      "boot_wait": "7s",
       "disk_size": 204800,
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_path": "/tmp/VBoxGuestAdditions.iso",
       "guest_os_type": "RedHat_64",
       "http_directory": "http",
-      "iso_checksum": "d07ab3e615c66a8b2e9a50f4852e6a77",
+      "iso_checksum": "88c0437f0a14c6e2c94426df9d43cd67",
       "iso_checksum_type": "md5",
-      "iso_url": "http://mirror.proserve.nl/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1503-01.iso",
+      "iso_url": "http://mirror.proserve.nl/centos/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
       "shutdown_command": "echo 'vagrant' | sudo -S poweroff",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -26,6 +25,18 @@
 
       ],
       "vm_name": "packer-centos-7-x86_64-1503-01"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/vagrant.sh",
+        "scripts/vboxguest.sh",
+        "scripts/puppet.sh",
+        "scripts/cleanup.sh"
+      ]
     }
   ],
   "post-processors": [
